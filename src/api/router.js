@@ -1,6 +1,6 @@
-const router = require('express').Router();
-const config = require('../../config/config');
 const jwt = require('express-jwt');
+const router = require('express').Router();
+const config = require('../config/config');
 
 const userRouter = require('./users/users.router');
 const moviesRouter = require('./movies/movies.router');
@@ -37,7 +37,7 @@ router.use([
   stringifyAuthHeader,
 ]);
 
-router.use('/user', userRouter)
+router.use('/users', userRouter);
 router.use('/movies', moviesRouter);
 
 module.exports = router;

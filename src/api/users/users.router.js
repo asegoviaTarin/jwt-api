@@ -1,9 +1,14 @@
 const router = require('express').Router();
+const usersController = require('./users.bll');
+
+router.post(
+  '/auth',
+  usersController.auth,
+);
 
 router.post(
   '/',
-  (req, res, next) => res.send(200),
+  usersController.create,
 );
-
 
 module.exports = router;

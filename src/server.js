@@ -2,13 +2,20 @@
  * Load environment variables from ".env" file, this must be called before any
  * "require('config')" to ensure that custom environment variables are loaded.
  */
- require('dotenv').config();
+require('dotenv').config();
 
-const packageJson = require('../package.json');
-const express = require('express');
 const cors = require('cors');
+const express = require('express');
+const bodyParser = require('body-parser').json();
+
+const middlewares = require('./middlewares');
+const packageJson = require('../package.json');
 const router = require('./api/router');
-const config = require('../config/config');
+const config = require('./config/config');
+const db = require('./config/database');
+
+const users = require('./api/users/users.repository');
+
 // Set app as a global variable to be able to export it if required as a module
 const app = express();
 // Set server as a global variable to be able to do a graceful exit
@@ -55,8 +62,19 @@ async function start() {
   try {
     console.info(`Starting ${packageJson.name}...`);
     console.info(`Version: ${packageJson.version}`);
+
+    await db.connect();
+    console.info('Connected with mongoDB!');
+    console.info('Creating default user...');
+
+    await users._initialize();
+
     // Enable CORS to allow incoming requests from all origins
     app.use(cors());
+
+    // Parse json request
+    app.use(bodyParser);
+
     /**
      * This is the base router that will send each request to their
      * corresponding version router.
@@ -67,8 +85,8 @@ async function start() {
      * request so it will be logged and the error will be handled and sent to
      * the user.
      */
-    //app.use(middlewares.notFoundHandler);
-   // app.use(middlewares.errorHandler);
+    app.use(middlewares.notFoundHandler);
+    app.use(middlewares.errorHandler);
     // Start server
     console.info('Starting express server...');
     const port = config.port;
