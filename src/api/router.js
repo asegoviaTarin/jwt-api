@@ -11,7 +11,7 @@ const path = [
     methods: 'POST',
   },
   {
-    url: '/movies',//config.endpoint.path,
+    url: '/movies/search',//config.endpoint.path,
     methods: 'GET',
   },
 ];

@@ -1,4 +1,11 @@
 const Boom = require('@hapi/boom');
+const celebrateErrors = require('celebrate').errors();
+
+// TODO: use logger
+function logError(err, req, res, next) {
+  console.error(err);
+  next(err);
+}
 
 // eslint-disable-next-line no-unused-vars
 function boomErrors(err, req, res, next) {
@@ -19,4 +26,4 @@ function boomErrors(err, req, res, next) {
   res.status(err.output.statusCode).send(err.output.payload);
 }
 
-module.exports = boomErrors;
+module.exports = [logError, celebrateErrors, boomErrors];

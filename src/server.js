@@ -15,6 +15,7 @@ const config = require('./config/config');
 const db = require('./config/database');
 
 const users = require('./api/users/users.repository');
+const movies = require('./api/movies/movies.repository');
 
 // Set app as a global variable to be able to export it if required as a module
 const app = express();
@@ -68,6 +69,7 @@ async function start() {
     console.info('Creating default user...');
 
     await users._initialize();
+    await movies._initialize();
 
     // Enable CORS to allow incoming requests from all origins
     app.use(cors());
@@ -89,7 +91,7 @@ async function start() {
     app.use(middlewares.errorHandler);
     // Start server
     console.info('Starting express server...');
-    const port = config.port;
+    const { port } = config;
     server = app.listen(port, () => {
       console.info(`Listening on port ${port}`);
     });

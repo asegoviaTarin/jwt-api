@@ -1,16 +1,25 @@
 const router = require('express').Router();
-
+const mw = require('../../middlewares');
+const moviesValidator = require('./movies.validator');
+const moviesController = require('./movies.controller');
 
 router.get(
-  '/',
-  (req, res, next) => res.send(200),
+  '/search',
+  mw.validator(moviesValidator.search),
+  moviesController.search,
 );
 
 router.post(
   '/',
-  (req, res, next) => res.send(200),
+  mw.validator(moviesValidator.create),
+  moviesController.create,
 );
 
+router.delete(
+  '/:id',
+  // mw.validator(moviesValidator.delete),
+  moviesController.delete,
 
+);
 
 module.exports = router;
