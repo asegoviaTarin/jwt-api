@@ -7,11 +7,15 @@ const moviesRouter = require('./movies/movies.router');
 
 const path = [
   {
-    url: '/users',//config.endpoint.path,
+    url: '/users',
     methods: 'POST',
   },
   {
-    url: '/movies/search',//config.endpoint.path,
+    url: '/users/auth',
+    methods: 'POST',
+  },
+  {
+    url: '/movies/search',
     methods: 'GET',
   },
 ];

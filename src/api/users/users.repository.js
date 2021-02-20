@@ -8,7 +8,7 @@ module.exports._initialize = async () => {
   const user = await db().collection(COLLECTION_USERS).findOne();
   if (!user) {
     await db().collection(COLLECTION_USERS)
-      .insertOne({ username: 'admin', pass: 'admin' });
+      .insertOne({ username: 'admin', password: 'admin' });
   }
 };
 

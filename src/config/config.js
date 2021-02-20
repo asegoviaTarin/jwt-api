@@ -10,6 +10,7 @@ module.exports = {
     jwt: {
       secret: process.env.AUTH_JWT_SECRET || '19930612',
       algorithms: process.env.AUTH_JWT_ALGORITMS || ['HS256'],
+      expiresIn: process.env.JWT_EXPIRES_IN || '1d',
     },
     header: process.env.AUTH_HEADER || 'auth',
   },
