@@ -1,4 +1,4 @@
-# Movies PI
+# Movies API
 
 This repository contains custom API with jwt auth.
 
