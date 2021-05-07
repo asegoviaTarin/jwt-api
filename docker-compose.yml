@@ -1,0 +1,36 @@
+version: '2'
+
+services:
+  ##############################################################################
+  # Services
+  ##############################################################################
+
+  api:
+    image: api:local
+    build:
+      context: ./
+    environment:
+      - MONGO_URL=mongodb://mongo:27017
+    volumes:
+      - "./api:/app"
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+  ##############################################################################
+  # Dependencies
+  ##############################################################################
+
+  mongo:
+    image: mongo:4.0
+    volumes:
+      - "mongo_data:/data/db"
+    ports:
+      - "27017:27017"
+    restart: unless-stopped
+
+volumes:
+  mongo_data:
+  mongo_configsvr:
+
+
